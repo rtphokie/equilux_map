@@ -2,8 +2,9 @@
 
 ![Equilux Map](equilux_map.png)
 
-
-This project generates a map of the contiguous United States, plotting data points for the autumnal equilux (the day when day and night are nearly equal) at various locations. The map visualizes the day of equilux for each point, using different markers for each weekday.
+This project generates a map of the contiguous United States, plotting data points for the autumnal equilux (the day
+when day and night are nearly equal) at various locations. The map visualizes the day of equilux for each point, using
+different markers for each weekday.
 
 ## Features
 
