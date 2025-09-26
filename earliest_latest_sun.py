@@ -107,7 +107,7 @@ def equilux(lat, lon, tzstr, year=2022, years=1, equinoxes=['Vernal', 'Autumnal'
                     results[f"{event_name.replace('nox', 'lux')} delta"] = (
                         deltastr
                     )
-                    results[f"{event_name.SEASON_EVENTS[yi].replace('nox', 'lux')} hours"] = (
+                    results[f"{event_name.replace('nox', 'lux')} hours"] = (
                         sunlight[idx]
                     )
 
