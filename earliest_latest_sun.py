@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 import datetime
 
 import numpy as np
 from mezmorize import Cache
-from skyfield import api, almanac
+from skyfield import almanac, api
 
-cache = Cache(CACHE_TYPE='filesystem', CACHE_DIR='cache_data')
+cache = Cache(CACHE_TYPE="filesystem", CACHE_DIR="cache_data")
 
 ts = api.load.timescale()
 load = api.Loader("/var/data")
@@ -15,7 +14,7 @@ e = load("de430t.bsp")
 
 
 @cache.memoize()
-def find_equinox(year, name='Autumnal'):
+def find_equinox(year, name="Autumnal"):
     """Return the UTC datetime of the given equinox in `year`."""
     t0 = ts.utc(year, 1, 1)
     t1 = ts.utc(year, 12, 31)
@@ -28,7 +27,9 @@ def find_equinox(year, name='Autumnal'):
 
 
 @cache.memoize()
-def equilux_by_latitude(lat, year=2025, equinox='Autumnal', window_days=8, utc_offset_hours=0.0):
+def equilux_by_latitude(
+    lat, year=2025, equinox="Autumnal", window_days=8, utc_offset_hours=0.0
+):
     """
     Find when the length of the day (sunrise to sunset) is closest to 12
     hours near an equinox, for a given latitude.
@@ -60,11 +61,11 @@ def equilux_by_latitude(lat, year=2025, equinox='Autumnal', window_days=8, utc_o
                      real physical instant, not a calendar label).
     """
     eq = find_equinox(year, equinox)
-    if equinox == 'Autumnal':
+    if equinox == "Autumnal":
         # equilux happens in the week(s) after the September equinox
         t0 = ts.utc(eq.year, eq.month, eq.day - 1)
         t1 = ts.utc(eq.year, eq.month, eq.day + window_days - 1)
-    elif equinox == 'Vernal':
+    elif equinox == "Vernal":
         # equilux happens in the week(s) before the March equinox
         t0 = ts.utc(eq.year, eq.month, eq.day - window_days + 1)
         t1 = ts.utc(eq.year, eq.month, eq.day + 1)
@@ -101,13 +102,15 @@ def equilux_by_latitude(lat, year=2025, equinox='Autumnal', window_days=8, utc_o
     d0, d1 = durations[idx], durations[neighbor]
     t0_, t1_ = sets[idx], sets[neighbor]
     frac = 0.0 if d0 == d1 else (12.0 - d0) / (d1 - d0)
-    equilux_instant = t0_.utc_datetime() + (t1_.utc_datetime() - t0_.utc_datetime()) * frac
+    equilux_instant = (
+        t0_.utc_datetime() + (t1_.utc_datetime() - t0_.utc_datetime()) * frac
+    )
 
     local_set = sets[idx].utc_datetime() + datetime.timedelta(hours=utc_offset_hours)
 
     return {
-        'date': local_set.date(),
-        'offby_seconds': (durations[idx] - 12.0) * 3600.0,
-        'sunlight_hours': durations[idx],
-        'equilux_utc': equilux_instant,
+        "date": local_set.date(),
+        "offby_seconds": (durations[idx] - 12.0) * 3600.0,
+        "sunlight_hours": durations[idx],
+        "equilux_utc": equilux_instant,
     }

@@ -13,6 +13,7 @@ dependencies = [
     "mezmorize>=0.31.0",
     "numpy>=2.4.3",
     "pyproj>=3.7.0",
+    "ruff>=0.16.8",
     "shapely>=2.1.2",
     "skyfield>=1.55",
     "tqdm>=4.70.1",
