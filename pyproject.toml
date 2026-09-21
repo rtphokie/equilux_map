@@ -1,0 +1,26 @@
+[project]
+name = "equilux-map"
+version = "0.1.0"
+description = "Visualize which day does the sun spend the closest to 12 hours above the horizon around a given equilux"
+readme = "README.md"
+authors = [
+    { name = "Tony Rice", email = "tony@whatsupin.space" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "geopandas>=1.1.4",
+    "matplotlib>=3.11.2",
+    "mezmorize>=0.31.0",
+    "numpy>=2.4.3",
+    "pyproj>=3.7.0",
+    "shapely>=2.1.2",
+    "skyfield>=1.55",
+    "tqdm>=4.70.1",
+]
+
+[project.scripts]
+equilux-map = "equilux_map:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
